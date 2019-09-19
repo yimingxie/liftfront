@@ -14,7 +14,7 @@
             >
           </el-cascader>
        
-          <span style="color: #D8DDDF;">|</span>
+          <span class="sline">|</span>
           <span style="width: 127px;overflow: hidden;display: inline-block;vertical-align: top;margin-top: 13px;">
             <a-date-picker @change="aChangePickDate" :defaultValue="moment(timeDefault, dateFormat)" :format="dateFormat" :showToday="false" placeholder="请选择日期" >
               <template slot="dateRender" slot-scope="current, today" >
@@ -24,7 +24,7 @@
               </template>
             </a-date-picker>
           </span>
-          <span style="color: #D8DDDF;margin-right:17px">|</span>
+          <span class="sline" style="margin-right:17px">|</span>
           <!-- <el-date-picker
 
             v-model="liftListParams.triggleTime"
@@ -413,6 +413,7 @@
       } 
     },
     mounted() {
+      let theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'theme1'
       // console.log(this)
       $this = this // 将this赋值给全局$this
       // this.$message("warning")
@@ -436,15 +437,30 @@
         }
       }
       var _this = this
-      this.map = new AMap.Map('container', {
-        // resizeEnable: true,
-        center: [113.920652, 22.499146],
-        // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
-        mapStyle: 'amap://styles/db9065b28cc027a6a3240fc2ae093125',
-        zoom: 20, //设置地图的缩放级别
-        features: ['bg', 'road', 'building', 'point'],
-        // showLabel: false //不显示地图文字标记
-      });
+      // 浅色
+      if(theme == 'theme1'){
+        this.map = new AMap.Map('container', {
+          // resizeEnable: true,
+          center: [113.920652, 22.499146],
+          // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
+          mapStyle: 'amap://styles/db9065b28cc027a6a3240fc2ae093125',
+          zoom: 20, //设置地图的缩放级别
+          features: ['bg', 'road', 'building', 'point'],
+          // showLabel: false //不显示地图文字标记
+        });
+        // 深色
+      } else {
+        this.map = new AMap.Map('container', {
+          // resizeEnable: true,
+          center: [113.920652, 22.499146],
+          // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
+          mapStyle: 'amap://styles/85ed8cccf4c51fa1c36fd40d443619eb',
+          zoom: 20, //设置地图的缩放级别
+          features: ['bg', 'road', 'building', 'point'],
+          // showLabel: false //不显示地图文字标记
+        });
+      }
+      
       this.map.setCity('深圳市');
       this.map.on('click', function(e) {
         _this.map.clearInfoWindow( )
@@ -955,6 +971,8 @@
       color #000
       font-size 14px
       absolute right 20px
+  .sline
+    color: #D8DDDF;
   .searchArea
     absolute top 60px
     width 100%

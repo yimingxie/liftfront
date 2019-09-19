@@ -20,14 +20,11 @@
       <div class="subBtns">
         <button class="btn blueBtn" @click="add_dialogFormVisible = true">添加账号</button>
         <router-link :to="{ name: 'role', params: { aaa: 123 }}"><button class="btn whiteBtn" >角色管理</button></router-link>
-        <!-- <div class="search1" :class="{inputActive:act_index==='1'}">
-          <input class="search_input" @focus="act_index='1'" @blur="act_index='0'" placeholder="电梯名称/注册代码" v-model.trim="searchKey" @input="searchEvent" ref="searchInput" autocomplete="off" autocapitalize="off" autocorrect="off"/>
-          <span class="search_btn"></span>
-        </div> -->
-        <search-input v-model.trim="searchKey" placeholderValue="搜索真实姓名/手机号">
-          <span slot="btn" class="search_btn" @click="searchAccount()" @keyup.enter.native="searchAccount()"></span>
-        </search-input>
         
+        <!-- <search-input v-model.trim="searchKey" placeholderValue="搜索真实姓名/手机号">
+          <span slot="btn" class="search_btn" @click="searchAccount()" @keyup.enter.native="searchAccount()"></span>
+        </search-input> -->
+        <search-input v-model.trim="searchKey" placeholderValue="搜索真实姓名/手机号" @search="searchAccount()" @cancel="searchAccount()"></search-input>
 
       </div>
       <!-- <search-box v-model="query" :active="searching" placeholder="11111" @cancel="getDevices(true)" @search-activate="toggleSearching" @search-deactivate="toggleSearching" @search="handleSearch" @press-enter="getDevices(true)"> -->

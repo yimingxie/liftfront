@@ -136,6 +136,9 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown" class="liftDropdown">
+                <div v-if="getLIftDataSecond.length > 0" style="height:25px;padding-right: 10px;margin-bottom: 10px;">
+                  <search-input v-model.trim="searchKey" placeholderValue="搜索电梯注册代码" @search="searchLift()" @cancel="searchLift()"></search-input>
+                </div>
                 <div v-if="getLIftDataSecond.length > 0" v-for="item in getLIftDataSecond" :key="item.regCode">
                   <div class="dropdownArea">{{item.areaName}}</div>
                   <div v-for="list in item.data" :key="list.regCode">
@@ -203,6 +206,7 @@ import { client } from '@/utils/alioss'
 import choiceindex from "../../components/multi-cascader/multi-cascader"; //级联选择多选 完成
 let pcas = require("../../utils/citySelector/pcas-code.json")
 import moment from 'moment';
+// import SearchCode from '../../components/SearchCode'
 
 export default {
   data() {
@@ -301,7 +305,7 @@ export default {
     'fotter': fotter,
     choiceindex, //级联
     'search-input': SearchInput,
-
+    // 'search-code': SearchCode,
   },
   watch:{
     // 切换员工管辖区域，获取管辖电梯列表
@@ -692,9 +696,8 @@ export default {
       }
       // console.log("this.checkList2--11111111111111-" + this.checkList2)
     },
-    createPickAreaRange(){
-      
-    },
+   
+    // 选择管辖区域
     regionChange2(val, totalLabel) {
 
       this.selectedAreaLabels = [] // 重置
@@ -967,8 +970,27 @@ export default {
       }
       return temp;
     },
-    
-    
+    searchLift(){
+      console.log("searchKey==" + this.searchKey)
+      // this.queryParam.depName = this.searchKey
+      // this.getAllDepartmentData()
+      if(this.getLIftDataSecond.length > 0){
+        // this.getLIftDataSecond.filter(item => {
+        //   return item.regCode.match(this.searchKey)
+        // })
+        var obj
+        this.getLIftDataSecond.filter(item => {
+          obj = item.data.filter(list => {
+            // console.log("item.regCode===" + JSON.stringify(item))
+            return list.regCode.indexOf(this.searchKey) > -1
+          })
+          
+        })
+        console.log("obj===" + JSON.stringify(obj))
+      }
+      
+    }
+
     
   },
 }

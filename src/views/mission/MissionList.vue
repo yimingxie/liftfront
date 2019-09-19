@@ -1733,22 +1733,22 @@ export default {
       }
     },
     // 查询所有账户
-    getAllAccountData(){
-      api.accountApi.getAccounts(this.queryParam).then((res) => {
-        if(res.data.code === 200 && res.data.message === 'success'){
-          this.getAllAccountJson = res.data.data.records
-          this.totalPageSize = res.data.data.total
+    // getAllAccountData(){
+    //   api.accountApi.getAccounts(this.queryParam).then((res) => {
+    //     if(res.data.code === 200 && res.data.message === 'success'){
+    //       this.getAllAccountJson = res.data.data.records
+    //       this.totalPageSize = res.data.data.total
 
-        } else {
-          this.getAllAccountJson = []
-        }
+    //     } else {
+    //       this.getAllAccountJson = []
+    //     }
         
-        // console.log("res.data.code" + res.data.data.records[0])s
-      }).catch((res) => {
+    //     // console.log("res.data.code" + res.data.data.records[0])s
+    //   }).catch((res) => {
         
-      })
+    //   })
       
-    },
+    // },
   
 
      // 每页条数变化
