@@ -1,4 +1,4 @@
-# avue2.0
+# avue2.2
 
 > A Vue.js project
 
