@@ -37,6 +37,13 @@
       </el-form-item>
     </el-form>
 
+    <div>
+      <input type="file" id="uploadFile">
+    </div>
+    <div>
+      <button @click="submitFile">提交</button>
+    </div>
+
   </div>
 </template>
 
@@ -82,7 +89,15 @@
           value: '',
           key: Date.now()
         });
-      }
+      },
+
+      submitFile() {
+        var formData = new FormData();
+        
+        console.log('uploadFile', document.getElementById("uploadFile").files[0])
+        formData.append('picture', document.getElementById("uploadFile").files[0])
+        console.log('formData', formData)
+      },
     }
   }
 </script>

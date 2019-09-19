@@ -214,6 +214,11 @@
               "id": 0,
               "name": "whole",
               "cn_name": "整体"
+            },
+	          {
+              "id": 1,
+              "name": "door",
+              "cn_name": "轿门"
             }
           ]
         }

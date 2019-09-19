@@ -51,7 +51,6 @@ Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
 Vue.filter('fromNow', function(dataStr, pattern = 'YYYYMMDD') {
   return moment(dataStr,pattern).fromNow()
 })
-
 // 注册全局过滤器
 // ------------------------------
 Object.keys(filters).forEach((key) => {

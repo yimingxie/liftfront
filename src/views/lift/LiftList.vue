@@ -129,7 +129,10 @@
           <div class="ll-choose-bottom clearfix">
             <div class="llcb-operate">
               <div class="llcb-btn info" @click="goLiftAdd">+ 添加电梯</div>
-              <div class="llcb-btn">批量录入</div>
+              <div class="llcb-btn" style="position: relative">
+                批量录入
+                <input class="inputFile" type="file">
+              </div>
               <div class="llcb-btn" @click="deleteLiftsDialog">删除电梯</div>
             </div>
             <div class="llcb-search">
