@@ -5,29 +5,33 @@ import App from './App'
 import router from './router-config'
 import vuex from 'vuex'
 import store from './store/index'
-import i18nobject from 'vue-i18n'
+// import i18nobject from 'vue-i18n'
 import VueForm from 'vue-form'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import echarts from 'echarts'
 // import globalMixins from './utils/mixins'
 import tab from "./components/tab";
-// import EleMultiCascader from "ele-multi-cascader"
-// import "ele-multi-cascader/dist/cascader.css"
-import elCascaderMulti from "el-cascader-multi";
-Vue.use(elCascaderMulti);
-
-Vue.use(ElementUI);
-// Vue.use(EleMultiCascader)
-
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
-
 import { DatePicker } from 'ant-design-vue'
 // import 'ant-design-vue/lib/button/style/css'
 import 'ant-design-vue/dist/antd.css'
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+// Vue.prototype.$mixins = globalMixins
+// import locales from './consts/locales/index'
+// 过滤器
+import * as filters from './filters/filters'
 // import 'ant-design-vue/lib/datepicker/style/css'
+// import EleMultiCascader from "ele-multi-cascader"
+// import "ele-multi-cascader/dist/cascader.css"
+// import elCascaderMulti from "el-cascader-multi";
+// Vue.use(elCascaderMulti);
+
+Vue.use(ElementUI);
+
+moment.locale('zh-cn');
+
+
 // Vue.use(globalMixins)
 
 // 引入自定义组件。index.js是组件的默认入口
@@ -47,10 +51,7 @@ Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
 Vue.filter('fromNow', function(dataStr, pattern = 'YYYYMMDD') {
   return moment(dataStr,pattern).fromNow()
 })
-// Vue.prototype.$mixins = globalMixins
-import locales from './consts/locales/index'
-// 过滤器
-import * as filters from './filters/filters'
+
 // 注册全局过滤器
 // ------------------------------
 Object.keys(filters).forEach((key) => {
@@ -59,7 +60,7 @@ Object.keys(filters).forEach((key) => {
 // 加载多语言插件
 // 手动切换语言设置 `Vue.config.lang = 'en-us'`
 // 详见：https://github.com/kazupon/vue-i18n
-Vue.use(i18nobject)
+// Vue.use(i18nobject)
 // Vue.use(i18n, {
 //   i18n: function(path, options) {
 //     let value = i18n.t(path, options)
@@ -69,11 +70,11 @@ Vue.use(i18nobject)
 //     return ''
 //   }
 // })
-Vue.config.lang = 'zh-cn'
-const i18n = new i18nobject({
-  locale: 'zh-cn',
-  messages: locales
-})
+// Vue.config.lang = 'zh-cn'
+// const i18n = new i18nobject({
+//   locale: 'zh-cn',
+//   messages: locales
+// })
 Vue.use(vuex)
 // 加载表单验证插件
 // 详见：https://github.com/fergaldoyle/vue-form
@@ -89,7 +90,7 @@ new Vue({
   el: '#app',
   router,
   store,//使用store
-  i18n,
+  // i18n,
   components: { App },
   template: '<App/>'
 })

@@ -162,6 +162,7 @@ export default {
     img{
       width: 59px;
       height: 88px;
+      object-fit: cover;
     }
     &:hover .picListmaskmask {
       opacity: 1;    

@@ -156,10 +156,10 @@
               </div>
               <div class="collapseImg unCollapseImg" v-if="!isCollapse" @click="isCollapse = true">
               </div>
-              <!-- <div id="contentDiv">
+              <div id="contentDiv">
                 <p @click="changeTheme('theme1')">111</p >
                 <p @click="changeTheme('theme2')">222</p >
-              </div> -->
+              </div>
               <a class="logo"></a>
               
               <!-- <div @mouseover="isShowUserNav = true" @mouseout="isShowUserNav = false" class="user-navigation">

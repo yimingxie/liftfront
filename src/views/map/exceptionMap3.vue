@@ -14,12 +14,12 @@
             >
           </el-cascader>
          
-          <span style="color: #D8DDDF;margin-right:17px">|</span>
+          <span class="sline" style="margin-right:17px">|</span>
          
           <radio-group :items="periods" :value.sync="period" >
             <span slot="label">处理进度：</span>
           </radio-group>
-          <span style="color: #D8DDDF;margin-right:9px">|</span>
+          <span class="sline" style="margin-right:9px">|</span>
          
           <radio-group :items="periods2" :value.sync="period2" >
             <span slot="label">维保类型：</span>
@@ -80,7 +80,7 @@
       <div class="map3InfoWindow">
         <i :class="arrowImg" class="arrowImg"></i>
 
-          <div v-if="elevatorInfo.inNum !== '0'" style="width:288px;background: rgba(52,65,76,0.90);border-radius: 4px;padding: 17px 17px 12px;">
+          <div v-if="elevatorInfo.inNum !== '0'" class="map2WindowClass" >
             <div class="info_num">
               {{elevatorInfo.inNum}}
             </div>
@@ -105,8 +105,7 @@
             <div class="lift_readMore" @click="goLiftResult(elevatorInfo.elevCode)">查看详情</div>
           </div>
           <div style="display:none;">// 未派单、可派单、已派单、已接单、已完成、无计划工单列表</div>
-          <div v-if="elevatorInfo.regCode !== ''&& stat != 6000" style="position: absolute;left: 300px;top: 8px;width:288px;background: rgba(52,65,76,0.90);
-            border-radius: 4px;padding: 17px 17px 12px;">
+          <div v-if="elevatorInfo.regCode !== ''&& stat != 6000" class="map2WindowClass" style="position: absolute;left: 300px;top: 8px;">
 
             <div style="display:none;">// 标题 第一行</div>
             <div class="info_num">
@@ -199,8 +198,8 @@
             <div class="lift_readMore" v-if="stat != 1000 && stat != 0" @click="goToDetail(record[0].taskId)">查看详情</div>
           </div>
           <div style="display:none;">// 已超时 工单列表</div>
-          <div v-if="stat == 6000 && procList.length > 0" style="position: absolute;left: 300px;top: 8px;width:288px;background: rgba(52,65,76,0.90);
-            border-radius: 4px;padding: 17px 17px 12px;max-height:470px;overflow: auto;">
+          <div v-if="stat == 6000 && procList.length > 0" class="map2WindowClass" style="position: absolute;left: 300px;top: 8px;
+            max-height:470px;overflow: auto;">
             <div v-for="(list,index) in procList" :key="index" style="padding-bottom: 10px;border-bottom: 10px solid #626b73;margin-bottom:20px">
               <div class="info_num" >
                 {{typeText[list.type]}}
@@ -496,6 +495,7 @@
       } 
     },
     mounted() {
+      let theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'theme1'
       this.getTotalData()
       $this = this // 将this赋值给全局$this
 
@@ -519,17 +519,39 @@
       }
       
       var _this = this
-
-      this.map = new AMap.Map('containerMap', {
-        // resizeEnable: true,
-        center: [113.93181,22.497398],
-        // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
-        mapStyle: 'amap://styles/db9065b28cc027a6a3240fc2ae093125',
-        zoom: 20, //设置地图的缩放级别
-        features: ['bg', 'road', 'building', 'point'],
-        // features: ['bg', 'building', 'point'],
-        // showLabel: false //不显示地图文字标记
-      });
+      // 浅色
+      if(theme == 'theme1'){
+        this.map = new AMap.Map('containerMap', {
+          // resizeEnable: true,
+          center: [113.920652, 22.499146],
+          // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
+          mapStyle: 'amap://styles/db9065b28cc027a6a3240fc2ae093125',
+          zoom: 20, //设置地图的缩放级别
+          features: ['bg', 'road', 'building', 'point'],
+          // showLabel: false //不显示地图文字标记
+        });
+        // 深色
+      } else {
+        this.map = new AMap.Map('containerMap', {
+          // resizeEnable: true,
+          center: [113.920652, 22.499146],
+          // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
+          mapStyle: 'amap://styles/85ed8cccf4c51fa1c36fd40d443619eb',
+          zoom: 20, //设置地图的缩放级别
+          features: ['bg', 'road', 'building', 'point'],
+          // showLabel: false //不显示地图文字标记
+        });
+      }
+      // this.map = new AMap.Map('containerMap', {
+      //   // resizeEnable: true,
+      //   center: [113.93181,22.497398],
+      //   // mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
+      //   mapStyle: 'amap://styles/db9065b28cc027a6a3240fc2ae093125',
+      //   zoom: 20, //设置地图的缩放级别
+      //   features: ['bg', 'road', 'building', 'point'],
+      //   // features: ['bg', 'building', 'point'],
+      //   // showLabel: false //不显示地图文字标记
+      // });
       this.map.setCity('深圳市');
       this.map.on('click', function(e) {
         _this.map.clearInfoWindow()
@@ -936,6 +958,8 @@
     transition-timing-function: linear;
     max-height:200px;
     padding-bottom: 20px;
+  .sline
+    color: #D8DDDF;
   .regionArea
     position relative
     z-index 99
@@ -1121,6 +1145,11 @@
 .map3InfoWindow
   width: 600px;
   height: 250px;
+  .map2WindowClass
+    width: 288px;
+    background: rgba(52, 65, 76, 0.9);
+    border-radius: 4px;
+    padding: 17px 17px 12px;
   .info_num
     font-size: 20px;
     color: #FFFFFF;
