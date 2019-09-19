@@ -129,10 +129,10 @@
           <div class="ll-choose-bottom clearfix">
             <div class="llcb-operate">
               <div class="llcb-btn info" @click="goLiftAdd">+ 添加电梯</div>
-              <div class="llcb-btn" style="position: relative">
+              <label for="liftInputFile" class="llcb-btn" style="position: relative" @click="submitFile">
                 批量录入
-                <input class="inputFile" type="file">
-              </div>
+                <input hidden id="liftInputFile" class="inputFile" type="file">
+              </label>
               <div class="llcb-btn" @click="deleteLiftsDialog">删除电梯</div>
             </div>
             <div class="llcb-search">
@@ -448,6 +448,20 @@ export default {
           that.$message.error(`${res.data.message}`)
         }
       })
+    },
+
+    // 批量录入
+    submitFile() {
+      let fileBtn = document.getElementById('liftInputFile')
+      let formData = new FormData();
+      console.log('uploadFile', fileBtn.files[0])
+      formData.append('picture', fileBtn.files[0])
+      console.log('formData', formData)
+
+      // 请求
+      // api.lift.xxx(formData).then(res => {
+      //   console.log('录入', res)
+      // })
     },
 
     // 跳转到单部电梯设备列表页

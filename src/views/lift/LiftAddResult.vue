@@ -290,7 +290,7 @@
                     <el-input v-model="ruleForm.highLevel" size="small"></el-input>
                   </el-form-item>
                   <el-form-item prop="tractCircf" class="lar-box">
-                    <h4>曳引轮直径（cm）</h4>
+                    <h4>限速轮直径（cm）</h4>
                     <el-input v-model="ruleForm.tractCircf" size="small"></el-input>
                   </el-form-item>
                   <!-- <el-form-item prop="loadControl" class="lar-box">

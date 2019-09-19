@@ -119,6 +119,9 @@
 
     </div>
 
+    <!-- 底部 -->
+    <footer-temp></footer-temp>
+
 
   </div>
 </template>

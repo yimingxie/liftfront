@@ -140,6 +140,9 @@
 
     </div>
 
+    <!-- 底部 -->
+    <footer-temp></footer-temp>
+
 
     <!-- 诊断处理弹窗 -->
     <el-dialog :visible.sync="dialogDispatch" title="诊断描述" :show-close="false" width="900px" @closed="dialogClosed">
@@ -326,6 +329,7 @@
 <script>
 import xymFun from '../../utils/xymFun'
 import api from '../../api.js'
+import Footer from '../common/fotter'
 import SearchCode from '../../components/SearchCode'
 import DetWarnListComp from './DetWarnListComp'
 import DetChartComp from './DetChartComp'
@@ -985,6 +989,7 @@ export default {
   },
   components: {
     'search-code': SearchCode,
+    'footer-temp': Footer,
     'det-warn-list-comp': DetWarnListComp,
     'det-chart-comp': DetChartComp,
     'det-detail-chart-comp': DetDetailChartComp,

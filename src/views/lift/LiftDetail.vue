@@ -352,7 +352,7 @@
                     <p class="show-pp" v-else>{{ruleForm.highLevel !== '' ? ruleForm.highLevel : '--'}}</p>
                   </el-form-item>
                   <el-form-item prop="tractCircf" class="lar-box">
-                    <h4>曳引轮直径（cm）</h4>
+                    <h4>限速轮直径（cm）</h4>
                     <el-input v-if="submitState == 'put'" v-model="ruleForm.tractCircf" size="small"></el-input>
                     <p class="show-pp" v-else>{{ruleForm.tractCircf !== '' ? ruleForm.tractCircf : '--'}}</p>
                   </el-form-item>
