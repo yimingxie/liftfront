@@ -24,8 +24,8 @@
               <p>事件告警电梯</p>
             </div>
             <div class="let-box-detail clearfix" v-show="!leType.show1">
-              <div class="lbd-left">
-                <h4>{{eleStList.accidentCount}}</h4>
+              <div class="lbd-left accidentColor">
+                <div class="lbd-left-h">{{eleStList.accidentCount}}</div>
                 <p>事件</p>
               </div>
               <div class="lbd-right">
@@ -42,8 +42,8 @@
               <p>故障告警电梯</p>
             </div>
             <div class="let-box-detail clearfix" v-show="!leType.show2">
-              <div class="lbd-left">
-                <h4>{{eleStList.faultCount}}</h4>
+              <div class="lbd-left faultColor">
+                <div class="lbd-left-h">{{eleStList.faultCount}}</div>
                 <p>故障</p>
               </div>
               <div class="lbd-right">
@@ -60,8 +60,8 @@
               <p>违规告警电梯</p>
             </div>
             <div class="let-box-detail clearfix" v-show="!leType.show3">
-              <div class="lbd-left">
-                <h4>{{eleStList.violationCount}}</h4>
+              <div class="lbd-left violationColor">
+                <div class="lbd-left-h">{{eleStList.violationCount}}</div>
                 <p>违规</p>
               </div>
               <div class="lbd-right">
@@ -77,8 +77,8 @@
               <p>设备预警电梯</p>
             </div>
             <div class="let-box-detail clearfix" v-show="!leType.show4">
-              <div class="lbd-left">
-                <h4>{{eleStList.warningCount}}</h4>
+              <div class="lbd-left warningColor">
+                <div class="lbd-left-h">{{eleStList.warningCount}}</div>
                 <p>预警</p>
               </div>
               <div class="lbd-right">
@@ -95,7 +95,7 @@
           <div class="les-box">
             <div class="les-box-top">
               <div class="les-box-top-data"><span>{{eleStList.abnormalPeople}}</span>异常外派人员</div>
-              <div class="les-box-top-day">今日</div>
+              <!-- <div class="les-box-top-day">今日</div> -->
             </div>
             <div class="les-box-bottom clearfix">
               <p style="width: 100%;">异常作业及时率：{{eleStList.promptness || 0}}%</p>
@@ -545,7 +545,7 @@ export default {
     box-shadow: 8px 0 20px -10px rgba(191,52,27,0.60);
   }
   .les-box{
-    padding 0 20px;
+    padding 0 50px;
   }
   .les-box-top{
     position relative;
@@ -637,9 +637,9 @@ export default {
     float left;
     width 40%;
     text-align center;
-    color #FFA90C;
+    // color #FFA90C;
   }
-  .lbd-left h4{
+  .lbd-left-h{
     font-size 30px;
     padding-top 40px;
   }

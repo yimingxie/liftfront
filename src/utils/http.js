@@ -138,7 +138,8 @@ if (process.env.NODE_ENV == 'development') {
   shupingURL = `${protocol}//192.168.100.7:8080`
   // localURL = `${protocol}//192.168.100.8:8080`
   // localURL = `${protocol}//iot.gidomino.com`
-  localURL = `${protocol}//192.168.100.3`
+  // localURL = `${protocol}//192.168.100.3`
+  localURL = `${protocol}//192.168.100.89:8080`
 } else if (process.env.NODE_ENV == 'production') {
   localURL = iot = devURL = xiaohuURL = shupingURL = `${protocol}//192.168.100.2`
   // localURL = iot = devURL = xiaohuURL = shupingURL = `${protocol}//iot.gidomino.com`

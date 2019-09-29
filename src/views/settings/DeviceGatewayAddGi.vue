@@ -214,7 +214,10 @@ export default {
         {label: 'IoT IRT Sensor'},
         {label: 'IoT 60V Sensor'},
         {label: 'IoT 600V Sensor'},
+        {label: 'IoT 600mV Sensor'},
         {label: 'IoT 200A Sensor'},
+        {label: 'IoT Thermal Double Sensor'},
+        {label: 'IoT Continuity Sensor'},
       ],
       modelValue: '',
       moniObjList: [

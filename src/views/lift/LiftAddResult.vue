@@ -1013,14 +1013,25 @@ export default {
     // 搜索地图
     searchMap(latLon) {
       let that = this
+      let theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'theme1'
       console.log('经纬度latLon', latLon)
 
       // 地图基础配置
       var marker;
+      var mapURL;
+      
+      // 深色主题
+      if (theme == 'theme2') {
+        mapURL = 'amap://styles/85ed8cccf4c51fa1c36fd40d443619eb'
+      }
+      // 浅色主题
+      else {
+        mapURL = 'amap://styles/db9065b28cc027a6a3240fc2ae093125'
+      }
       var map = new AMap.Map("map-container", {
         resizeEnable: true,
         zoom: 20,
-        mapStyle: 'amap://styles/db9065b28cc027a6a3240fc2ae093125',
+        mapStyle: mapURL,
       });
 
       // 创建覆盖物
