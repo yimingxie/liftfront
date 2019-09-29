@@ -45,7 +45,7 @@
     methods: {
       searchEvent (val) {
         // this.value = value
-        // console.log("val---" + val)
+        console.log("val---" + val)
         this.$emit('search', val)
       },
       // 清空

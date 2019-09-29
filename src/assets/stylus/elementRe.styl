@@ -499,3 +499,39 @@
 
 .el-input__prefix
   display: none!important;
+
+// ------------element 日历--------------
+.el-date-table td.end-date span, .el-date-table td.start-date span{
+  background: none !important;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6159ff), to(#4272ff)) !important;
+  background-image: linear-gradient(90deg, #6159ff 0%, #4272ff 100%) !important;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(66,114,255,0.3) !important;
+}
+.el-date-table td.today span{
+  color: #4272FF!important;
+}
+.el-date-table td:hover{
+  color: #4272FF!important;
+}
+// ------------element 日历-end--------------
+
+// ------------element 日期时间选择--------------
+.el-date-table td.current:not(.disabled) span{
+  background: none !important;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6159ff), to(#4272ff)) !important;
+  background-image: linear-gradient(90deg, #6159ff 0%, #4272ff 100%) !important;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(66,114,255,0.3) !important;
+  color: #fff!important;  
+}
+
+// ------------element 日期时间选择-end-------------
+
+// ------------element 翻页-------------
+.el-pagination__editor.el-input .el-input__inner,
+.el-pagination__sizes .el-input .el-input__inner{
+  height:24px!important;
+}
+.el-pagination .el-select .el-input{
+  width:82px!important; 
+}
+// ------------element 翻页-end-------------

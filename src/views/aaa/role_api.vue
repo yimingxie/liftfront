@@ -24,9 +24,9 @@
           </el-select>
         </el-form-item>
         
-        <!-- <el-form-item label="角色职责描述">
+        <el-form-item label="角色职责描述">
           <el-input v-model="sizeForm.description"></el-input>
-        </el-form-item> -->
+        </el-form-item>
        
         <el-form-item size="large">
           <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -134,7 +134,7 @@
           
           corpId: '',
           name: "测试",
-          description: "测试",
+          description: "",
           // template:{}
         },
         adding:true,

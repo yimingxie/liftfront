@@ -52,7 +52,7 @@
   // 地图
   .regionArea{
     background: $background-color-theme-dark!important
-    border-bottom:1px solid #000;
+    border-bottom:1px solid #1a1b1f;
     box-shadow: none!important;
   }
   #regMap,#mainMap {
@@ -97,7 +97,25 @@
     color: $font-color-theme-dark;
   }
   .shadowMarker{
-    background: radial-gradient(rgba(17, 20, 24, 0.95), rgba(1, 13, 25, 0.85), rgba(3, 14, 26, 0.25), rgba(33, 4, 4, 0));
+    background: radial-gradient(#4d4f56, rgba(80, 81, 93, 0.31), rgba(48, 51, 55, 0.25), rgb(44, 45, 51))
+  }
+  .arrowImg4{
+    background url("assets/images/hs/mapIcon/arrow4Dark.png") no-repeat;
+  }
+  .arrowImg3{
+    background url("assets/images/hs/mapIcon/arrow3Dark.png") no-repeat;
+  }
+  .arrowImg2{
+    background url("assets/images/hs/mapIcon/arrow2Dark.png") no-repeat;
+  }
+  .arrowImg1{
+    background url("assets/images/hs/mapIcon/arrow1Dark.png") no-repeat;
+  }
+  .arrowImg0{
+    background url("assets/images/hs/mapIcon/arrow0Dark.png") no-repeat;
+  }
+  .arrowImg{
+    background-size: 100% auto;
   }
   // 地图2弹窗
   .map3InfoWindow {
@@ -116,9 +134,17 @@
     .lift_readMore{
       color: $font-color-theme-dark;
     }
+    .arrowImg{
+      width: 40px;
+      height:40px;
+    }
+    .arrowImg5{
+      background url("assets/images/hs/mapIcon/arrow5Dark.png") no-repeat -5px -5px;
+      background-size: 100% auto;
+    }
   }
   .main-wrap .blueBtn{
-    background-color: $color-main-dark;
+    background-color: $color-main-dark!important;
   }
   .main-wrap .whiteBtn{
     border: 1px solid $border-color-dark;
@@ -149,6 +175,307 @@
   #mission .missionTable .lift{
     color: $font-color-theme-dark;
   }
+  // 提示框
+  .search-container {
+    .llcb-search-tips{
+      background: #313238!important;
+      box-shadow: 0 0 10px 0 #1A1B1F!important;
+    }
+    .search-tip-box {
+      h4{
+        color: $color-white-dark!important;
+      }
+      p{
+        color: $font-color-themesec-dark!important;
+      }
+      &:hover{
+        background: rgba(159,185,247,0.10)!important;
+      }
+    }
+    .on{
+      background: rgba(159,185,247,0.10)!important;
+    }
+  }
+  // 菜单栏
+  // 鼠标移动后菜单高亮 黑色图标
+  // #page-container{
+  //   .el-menu-item:not(.disabled):hover{
+  //     .icon-map{
+  //       background url('assets/images/hs/submenuIconDark/openMap3.png') no-repeat center;
+  //     }
+  //     .icon-diagnosis{
+  //       background url('assets/images/hs/submenuIconDark/openZhen3.png') no-repeat center;
+  //     }
+  //     .icon-business{
+  //       background url('assets/images/hs/submenuIconDark/openTable3.png') no-repeat center;
+  //     }
+  //   }
+  //   // 折叠菜单栏 大图标
+  //   .el-menu--collapse{
+  //     // 鼠标移动后菜单高亮
+  //     .el-menu-item:hover:not(.disabled){
+  //       .icon-map{
+  //         background url('assets/images/hs/submenuIconDark/openMap3.png') no-repeat center;
+  //       }
+  //       .icon-diagnosis{
+  //         background url('assets/images/hs/submenuIconDark/openZhen3.png') no-repeat center;
+  //       }
+  //       .icon-business{
+  //         background ur('assets/images/hs/submenuIconDark/openTable3.png') no-repeat center;
+  //       }
+  //     }
+  //   }
+  //   // 点击后菜单高亮 蓝色图标
+  //   .el-menu-item.is-active:not(.disabled){
+  //     .icon-map{
+  //       background url('assets/images/hs/submenuIcon/openMap1.png') no-repeat center;
+  //     }
+  //     .icon-lift{
+  //       background url('assets/images/hs/submenuIcon/openLift1.png') no-repeat center;
+  //     }
+  //     .icon-diagnosis{
+  //       background url('assets/images/hs/submenuIcon/openZhen1.png') no-repeat center;
+  //     }
+  //     .icon-task{
+  //       background url('assets/images/hs/submenuIcon/openTask1.png') no-repeat center;
+  //     }
+  //     .icon-business{
+  //       background url('assets/images/hs/submenuIcon/openTable1.png') no-repeat center;
+  //     }
+  //   }
+  // }
+
+  // ------------菜单栏---------------
+  #page-container{
+    .logoCollapse{
+      background url('assets/images/hs/darkIcon/logo1.png') no-repeat center  #2E3138;
+      background-size: 24px auto;
+    }
+    .logoUncollapse .bg{
+      background url('assets/images/hs/submenuIconDark/logo2.png') no-repeat center  #2E3138;
+      background-size: 174px auto;
+    }
+    .logoUncollapse .name{
+      color: $font-color-theme-dark
+    }
+    .logoUncollapse .perTitle{
+      color: rgba(255,255,255,0.55);
+    }
+      // 设置侧边栏图标 小图标 灰色图标
+    .icon-map{
+      background url('assets/images/hs/submenuIconDark/openMap2.png') no-repeat center;
+    }
+    .icon-lift{
+      background url('assets/images/hs/submenuIconDark/openLift2.png') no-repeat center;
+    }
+    .icon-diagnosis{
+      background url('assets/images/hs/submenuIconDark/openZhen2.png') no-repeat center;
+      // background url('assets/images/hs/submenuIconDark/openZhen3.png') no-repeat center;
+    }
+    .icon-task{
+      background url('assets/images/hs/submenuIconDark/openTask2.png') no-repeat center;
+    }
+    .icon-business{
+      background url('assets/images/hs/submenuIconDark/openTable2.png') no-repeat center;
+    }
+    .icon-setting{
+      background url('assets/images/hs/submenuIconDark/openSet2.png') no-repeat center;
+    }
+    
+    // 鼠标移动后菜单高亮 黑色图标
+    .el-menu-item:not(.disabled):hover{
+      .icon-map{
+        background url('assets/images/hs/submenuIconDark/openMap3.png') no-repeat center;
+      }
+      .icon-lift{
+        background url('assets/images/hs/submenuIconDark/openLift3.png') no-repeat center;
+      }
+      .icon-diagnosis{
+        background url('assets/images/hs/submenuIconDark/openZhen3.png') no-repeat center;
+      }
+      .icon-task{
+        background url('assets/images/hs/submenuIconDark/openTask3.png') no-repeat center;
+      }
+      .icon-business{
+        background url('assets/images/hs/submenuIconDark/openTable3.png') no-repeat center;
+      }
+    }
+    .el-submenu:not(.disabled):hover{
+      .icon-setting{
+        background url('assets/images/hs/submenuIconDark/openSet3.png') no-repeat center;
+      }
+    }
+      
+    // 点击后菜单高亮 蓝色图标
+    .el-menu-item.is-active:not(.disabled){
+      .icon-map{
+        background url('assets/images/hs/submenuIconDark/openMap1.png') no-repeat center;
+      }
+      .icon-lift{
+        background url('assets/images/hs/submenuIconDark/openLift1.png') no-repeat center;
+      }
+      .icon-diagnosis{
+        background url('assets/images/hs/submenuIconDark/openZhen1.png') no-repeat center;
+      }
+      .icon-task{
+        background url('assets/images/hs/submenuIconDark/openTask1.png') no-repeat center;
+      }
+      .icon-business{
+        background url('assets/images/hs/submenuIconDark/openTable1.png') no-repeat center;
+      }
+    }
+      
+    .el-submenu.is-active:not(.disabled){
+      .icon-setting{
+        background url('assets/images/hs/submenuIconDark/openSet1.png') no-repeat center;
+      }
+    }
+    // 设置侧边栏图标 end
+
+    // 折叠菜单栏 大图标
+    .el-menu--collapse{
+      // 设置侧边栏图标
+      .icon-map{
+        background url('assets/images/hs/submenuIconDark/map2.png') no-repeat center;
+      }
+      .icon-lift{
+        background url('assets/images/hs/submenuIconDark/lift2.png') no-repeat center;
+      }
+      .icon-diagnosis{
+        background url('assets/images/hs/submenuIconDark/zhen2.png') no-repeat center;
+      }
+      .icon-task{
+        background url('assets/images/hs/submenuIconDark/task2.png') no-repeat center;
+      }
+      .icon-business{
+        background url('assets/images/hs/submenuIconDark/table2.png') no-repeat center;
+      }
+      .icon-setting{
+        background url('assets/images/hs/submenuIconDark/set2.png') no-repeat center;
+      }
+      // 鼠标移动后菜单高亮
+      .el-menu-item:hover:not(.disabled){
+        .icon-map{
+          background url('assets/images/hs/submenuIconDark/Map3.png') no-repeat center;
+        }
+        .icon-lift{
+          background url('assets/images/hs/submenuIconDark/lift3.png') no-repeat center;
+        }
+        .icon-diagnosis{
+          background url('assets/images/hs/submenuIconDark/zhen3.png') no-repeat center;
+        }
+        .icon-task{
+          background url('assets/images/hs/submenuIconDark/task3.png') no-repeat center;
+        }
+        .icon-business{
+          background url('assets/images/hs/submenuIconDark/table3.png') no-repeat center;
+        }
+      }
+        
+      .el-submenu:hover:not(.disabled){
+        .icon-setting{
+          background url('assets/images/hs/submenuIconDark/set3.png') no-repeat center;
+        }
+      }
+        
+      // 点击后菜单高亮
+      .el-menu-item.is-active:not(.disabled){
+        .icon-map{
+          background url('assets/images/hs/submenuIconDark/map1.png') no-repeat center;
+        }
+        .icon-lift{
+          background url('assets/images/hs/submenuIconDark/lift1.png') no-repeat center;
+        }
+        .icon-diagnosis{
+          background url('assets/images/hs/submenuIconDark/zhen1.png') no-repeat center;
+        }
+        .icon-task{
+          background url('assets/images/hs/submenuIconDark/task1.png') no-repeat center;
+        }
+        .icon-business{
+          background url('assets/images/hs/submenuIconDark/table1.png') no-repeat center;
+        }
+      }
+        
+      .el-submenu.is-active:not(.disabled){
+        .icon-setting{
+          background url('assets/images/hs/submenuIconDark/set1.png') no-repeat center;
+        }
+      }
+        // 设置侧边栏图标 end
+    
+    }
+    .icon-map,.icon-lift,.icon-diagnosis,.icon-task,.icon-business,.icon-setting{
+      background-size: 16px auto!important;
+    }
+  }
+  // ------------菜单栏-end--------------
+
+  // ------------商标---------------
+  #fotter {
+    color: $font-color-themetri-dark;
+    .loginBrand{
+      background: url('assets/images/hs/darkIcon/logo4.png') no-repeat center;
+      background-size: 289px auto;
+    }
+  }
+  #center {
+    .perName ,.showName{
+      color: $font-color-theme-dark;
+    }
+    .perPosition ,.showPhone{
+      color: $font-color-themesec-dark;
+    }
+    .pTitle{
+      color:  $color-main-dark;
+      background: url('assets/images/hs/darkIcon/time.png') no-repeat left center;
+      background-size: 14px auto;
+    }
+    .pTitle1{
+      background: url('assets/images/hs/darkIcon/account.png') no-repeat left center;
+      background-size: 14px auto;
+    }
+    .shadow{
+      background-image: linear-gradient(90deg, #26282E 0%, #242428 80%, #1B1C1D 100%);
+    }
+    .content{
+      background: url('assets/images/hs/darkIcon/center.png') no-repeat right bottom;
+    }
+    
+  }
+  // ------------商标-end--------------
+
+  // ------------区域选择下拉框---------------
+  .el-cascader-menus{
+    background: #313238;
+    border:none;
+  }
+  .el-cascader-menu{
+    border-right:none;
+    background: #FFFFFF;
+    box-shadow: 0 0 10px -2px rgba(12,22,49,0.30);
+    border-radius: 4px;
+    background: #313238;
+  }
+  .el-cascader-menu__item{
+    color: $font-color-theme-dark
+    &.is-active{
+      color: $color-main-dark !important;
+    }
+  }
+  .el-cascader-menu__item:focus:not(:active), .el-cascader-menu__item:hover{
+    background: rgba(159,185,247,0.10)!important;
+  }
+  .el-popper[x-placement^=bottom] .popper__arrow{
+    border-bottom-color: #313238;
+
+  }
+  .el-popper[x-placement^=bottom] .popper__arrow::after{
+    border-bottom-color: #313238;
+  }
+  // ------------区域选择下拉框-end--------------
+
+
 }
 
   

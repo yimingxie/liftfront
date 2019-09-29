@@ -441,7 +441,7 @@ const router = new Router({
         title: "一些例子",
         auto: false // 是否需要权限
       },
-      component: (resolve) => require(['./components/PictureList.vue'], resolve)
+      component: (resolve) => require(['./views/example/xiang.vue'], resolve)
     },
     {
       path: "/switchSty",
@@ -460,6 +460,15 @@ const router = new Router({
         auto: false // 是否需要权限
       },
       component: (resolve) => require(['./views/settings/BatchImport.vue'], resolve)
+    },
+    {
+      path: "/exampleMap",
+      name: "exampleMap",
+      meta: {
+        title: "ditu",
+        auto: false // 是否需要权限
+      },
+      component: (resolve) => require(['./views/example/exampleMap.vue'], resolve)
     },
     
   ]

@@ -676,7 +676,7 @@
           isCustom: true,  // 使用自定义窗体
           autoMove: true, // 是否自动调整窗体到视野内
           content: infoWindowComponent.$el,
-          offset: new AMap.Pixel(70, -27),
+          offset: new AMap.Pixel(60, -28),
           anchor: 'top-left', // 设置锚点方位
           // closeWhenClickMap:true //点击地图关闭
         });
@@ -1183,6 +1183,7 @@
     top: 22px;
   .arrowImg5
     background url("../../assets/images/hs/mapIcon/arrow5.png") no-repeat;
+    background-size: 100% auto;
   .progressPanel
     // 初始状态
     .progressIcon

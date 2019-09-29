@@ -32,13 +32,13 @@
 
       <el-form :model="EditAccountForm" :label-width="formLabelWidth" :rules="rules" ref="EditAccountForm">
         <el-form-item label="旧密码：" prop="old">
-          <el-input type="password" v-model="EditAccountForm.old" auto-complete="off" clearable></el-input>
+          <el-input type="password" v-model="EditAccountForm.old" placeholder="请输入旧密码" auto-complete="off" clearable></el-input>
         </el-form-item>
         <el-form-item label="新密码：" prop="salt">
-          <el-input type="password" v-model="EditAccountForm.salt" auto-complete="off" clearable></el-input>
+          <el-input type="password" v-model="EditAccountForm.salt" placeholder="请输入新密码" auto-complete="off" clearable></el-input>
         </el-form-item>
         <el-form-item label="确认密码：" prop="again">
-          <el-input type="password" v-model="EditAccountForm.again" auto-complete="off" clearable></el-input>
+          <el-input type="password" v-model="EditAccountForm.again" placeholder="请再次输入新密码" auto-complete="off" clearable></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer tac">
@@ -207,14 +207,14 @@ export default {
     height 237px
   .pTitle 
     color: #4272FF;
-    background url('../../assets/images/hs/account.png') no-repeat left center;
+    background url('../../assets/images/hs/time.png') no-repeat left center;
     text-indent 25px
     width 100px
     line-height 35px
     display inline-block
 
   .pTitle1
-    background url('../../assets/images/hs/time.png') no-repeat left center;
+    background url('../../assets/images/hs/account.png') no-repeat left center;
   .editPsd
     background url('../../assets/images/hs/editPsd.png') no-repeat 10px center #4272FF;
     margin-top 30px

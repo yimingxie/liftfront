@@ -32,10 +32,10 @@
           </el-select>
         </el-form-item>
         
-        <!-- <el-form-item label="描述">
+        <el-form-item label="描述">
           <el-input v-model="sizeForm.description"></el-input>
 
-        </el-form-item> -->
+        </el-form-item>
        <!-- <el-form-item label="权限集合JSON数组">
           <el-checkbox-group v-model="selectedArray" @change="handleCheckedCitiesChange">
             <el-checkbox v-for="(api,index) in getAllApiJson" :label="api" :key="index">{{api.name}}</el-checkbox>
@@ -168,7 +168,7 @@
         sizeForm: {
           corpId: '',
           name: "作业地图",
-          description: "作业地图",
+          description: "",
           // webView:[]
         },
         adding:true,

@@ -95,9 +95,9 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page.sync="queryParam.offset"
               :page-sizes="[10, 20, 30]"
-              :page-size="queryParam.limit"
+              :page-size="staffMLiftParam.limit"
+              :current-page="staffMLiftParam.offset"
               layout="prev, pager, next, sizes, jumper"
               :total="totalPageSize">
             </el-pagination>
@@ -157,9 +157,9 @@
             <el-pagination
               @size-change="handleSizeChange2"
               @current-change="handleCurrentChange2"
-              :current-page.sync="taskListParams.offset"
               :page-sizes="[10, 20, 30]"
               :page-size="taskListParams.limit"
+              :current-page="taskListParams.offset"
               layout="prev, pager, next, sizes, jumper"
               :total="totalPageSize2">
             </el-pagination>
@@ -192,14 +192,14 @@ export default {
       dateFormat: 'YYYY-MM-DD',
       getStaffInfo:[],
       totalPageSize:0,
-      queryParam:{
-        offset:1,
-        limit:10,
-        column: "create_time",
-        order: false,
-        queryStr: "",
-        corpId:window.localStorage.getItem('corpId')
-      },
+      // queryParam:{
+      //   offset:1,
+      //   limit:10,
+      //   column: "create_time",
+      //   order: false,
+      //   queryStr: "",
+      //   corpId:window.localStorage.getItem('corpId')
+      // },
       fits:'cover',
       url: '',
       open: false,
@@ -234,6 +234,11 @@ export default {
         1365:'年度维保',
         2000:'故障处理',
         4000:'事故救援',
+      },
+      staffMLiftParam:{
+        userId:this.$route.params.staffId,
+        limit:10,
+        offset:1
       }
     }
   },
@@ -241,7 +246,10 @@ export default {
     'fotter': fotter,
   },
   mounted() {
-    this.getAllAccountData(),
+    this.getAllAccountData()
+    // 获取员工管辖电梯
+    this.getStaffManageLift()
+    // 获取员工作业记录
     this.getStaffTaskList()
     console.log("params==" + this.$route.params.staffId)
     // console.log("111111111111111::" + moment("20121031", "YYYYMMDD").fromNow())
@@ -281,15 +289,15 @@ export default {
           this.empTimeFrom = moment(moment(this.getStaffInfo.empTime).format('YYYYMMDD'),'YYYYMMDD').fromNow().replace("前","").replace("内","")
           console.log("this.birthdayFrom---" + this.birthdayFrom)
 
-          this.elevatorList = res.data.data.elevatorList
+          // this.elevatorList = res.data.data.elevatorList
           this.totalPageSize = res.data.data.elevatorTotal
           // this.url = "http://192.168.100.7:8080/domino/view/image?filename=" + this.getStaffInfo.avatarUrl
           this.url = api.accountApi.viewPic(this.getStaffInfo.avatarUrl)
           
-          this.elevatorList.forEach(item =>{
-            var areaName = newArea.getAreaName(item.areaCode).join('')
-            Vue.set(item, 'areaName', areaName)
-          })
+          // this.elevatorList.forEach(item =>{
+          //   var areaName = newArea.getAreaName(item.areaCode).join('')
+          //   Vue.set(item, 'areaName', areaName)
+          // })
           
           // 获取头像
           
@@ -308,6 +316,23 @@ export default {
       })
      
     },
+    // 获取员工管辖电梯
+    getStaffManageLift(){
+      console.log("this.staffMLiftParam==" + JSON.stringify(this.staffMLiftParam))
+      api.accountApi.getStaffManageLift(this.staffMLiftParam).then((res) => {
+        if(res.data.code === 200 && res.data.message === 'success'){
+          this.elevatorList = res.data.data.elevList
+          // this.totalPageSize = res.data.data.count
+          this.elevatorList.forEach(item =>{
+            var areaName = newArea.getAreaName(item.areaCode).join('')
+            Vue.set(item, 'areaName', areaName)
+          })
+        } else {
+          this.elevatorList = []
+        }
+        
+      })
+    },
     // 跳转到工单详情
     goToDetail(index,row){
       this.$router.push({name: 'missionDetail', params: {'id': row.taskId}})
@@ -324,16 +349,16 @@ export default {
     // },
     // 每页条数变化
     handleSizeChange(val) {
-      this.queryParam.limit = val
+      this.staffMLiftParam.limit = val
       // console.log(`每页 ${val} 条`);
-      this.getAllAccountData()
+      this.getStaffManageLift()
     },
 
     // 当前页变化
     handleCurrentChange(val) {
-      this.queryParam.offset = val
+      this.staffMLiftParam.offset = val
       // console.log(`当前页: ${val}`);
-      this.getAllAccountData()
+      this.getStaffManageLift()
     },
     // 每页条数变化
     handleSizeChange2(val) {

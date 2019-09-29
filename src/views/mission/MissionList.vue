@@ -558,16 +558,16 @@ export default {
         // {date: 31,msg: 6,total:9},
       ],
       totalPageSize:0, // 总页数
-      queryParam:{
-        // pageNo: 1,
-        // pageSize: 100,
-        offset:1,
-        limit:10,
-        column: "create_time",
-        order: false,
-        queryStr: "",
-        corpId:window.localStorage.getItem('corpId')
-      },
+      // queryParam:{
+      //   // pageNo: 1,
+      //   // pageSize: 100,
+      //   offset:1,
+      //   limit:10,
+      //   column: "create_time",
+      //   order: false,
+      //   queryStr: "",
+      //   corpId:window.localStorage.getItem('corpId')
+      // },
       getAllAccountJson: [],
       
       searchKey:'',
@@ -734,7 +734,8 @@ export default {
       if(val !== ""){ //无计划
         this.conditions1 = this.periods1.filter(item => item.value === val )
         this.openCondition1 = true
-        this.period2 = ""
+        this.period2 = "" // 重置 处理进度：全部
+        this.period3 = "" // 重置 作业类型：全部
         this.monthTaskListParam.stat = val
         this.monthTaskListParam.offset = 0
         this.getMissionList()
@@ -761,7 +762,7 @@ export default {
       if(val !== ""){ //筛选进度
         this.conditions2 = this.periods2.filter(item => item.value === val )
         this.openCondition2 = true
-        this.period1 = ""
+        this.period1 = ""  // 重置 筛选电梯
         if(this.checkedDate.length > 9) {
           // 获取日视图列表
           this.dateTaskListParam.offset = 0
@@ -796,6 +797,7 @@ export default {
       if(val !== ""){
         this.conditions3 = this.periods3.filter(item => item.value === val )
         this.openCondition3 = true
+        this.period1 = "" // 重置 筛选电梯
       }
       if(this.checkedDate.length > 9){
         // 获取日视图列表
@@ -1025,6 +1027,8 @@ export default {
             // 获取月视图列表
             this.getMissionList()
           }
+           // 日历数据
+          this.getRiliList()
           this.closeModelDialog = false
         } else {
           this.$message.error(res.data.message);
@@ -1186,6 +1190,8 @@ export default {
             // 获取月视图列表
             this.getMissionList()
           }
+           // 日历数据
+          this.getRiliList()
         } else {
           this.$message.error(res.data.message);
         }
@@ -1286,11 +1292,11 @@ export default {
           return value.id == task
         })
         // // this.checkedStaffsName.push(obj[0].staffName)
-        console.log("this.obj===" + obj[0])
+        // console.log("this.obj===" + obj[0])
         if(obj[0].status == "1000"){
           _this.checkTaskListArr.push(obj[0])
         }
-        console.log("this.checkTaskListArr===" + JSON.stringify(_this.checkTaskListArr))
+        // console.log("this.checkTaskListArr===" + JSON.stringify(_this.checkTaskListArr))
       })
 
       if(this.checkTaskListArr.length < 1) {
@@ -1577,7 +1583,6 @@ export default {
         })
       } else { // 创建计划
         api.taskApi.createPlan(this.createPlanParam).then((res) => {
-          alert(2)
           if(res.data.code == 200) {
             this.$message.success('创建计划成功！');
             // 获取任务列表
@@ -1592,6 +1597,8 @@ export default {
               // 获取月视图列表
               this.getMissionList()
             }
+            // 日历数据
+            this.getRiliList()
           } else {
             this.$message.error(res.data.message);
           }

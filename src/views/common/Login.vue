@@ -22,6 +22,8 @@
               <!-- <input placeholder="请输入密码" v-model="model.password" name="Password" type="password" required=""> -->
               <input v-if="loginForm.type === 0" placeholder="请输入密码" v-model="loginForm.password" name="Password" type="password" class="loginInput">
               <input v-if="loginForm.type === 1" placeholder="请输入验证码" v-model="loginForm.password" class="loginInput">
+              <span v-if="loginForm.type === 1" v-show="sendAuthCode"  class="smsSpan" @click="getSms()">获取验证码</span>
+              <span v-if="loginForm.type === 1" v-show="!sendAuthCode"  class="smsSpan"> <span class="auth_text_blue">{{auth_time}}</span>s</span> 
             </div>
             <!-- <div class="inputWrap">
               <label>
@@ -34,9 +36,9 @@
           </div>
           <div class="wthreeText">
             <ul>
-              <li v-if="loginForm.type === 0" style="float:left" @click="loginForm.type = 1">账号密码登录
+              <li v-if="loginForm.type === 1" style="float:left" @click="loginForm.type = 0;warningTip = ''">账号密码登录
               </li>
-              <li v-if="loginForm.type === 1" style="float:left" @click="loginForm.type = 0">验证码登录
+              <li v-if="loginForm.type === 0" style="float:left" @click="loginForm.type = 1;warningTip = ''">验证码登录
               </li>
               <li style="float:right">
                 <label>
@@ -91,11 +93,15 @@
         loginForm: {
           account: '',
           password: '',
-          type:0
+          type:0,
+          client:0
         },
         isLoginSuccess: false,
         rememberPwd: Boolean(this.getCookie('rememberPwd')) || false,
-        warningTip:''
+        warningTip:'',
+        sms:'',
+        sendAuthCode:true,/*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */
+        auth_time: 0, /*倒计时 计数器*/
       }
     },
     watch: {
@@ -108,15 +114,41 @@
       }
     },
     methods: {
-      
+      getSms(){
+        api.log.getSms({"phone" : this.loginForm.account}).then((res) => {
+          if(res.data.code === 200){
+
+            this.warningTip = ''
+            this.sendAuthCode = false;
+            this.auth_time = 6;
+            var auth_timetimer =  setInterval(()=>{
+                this.auth_time--;
+                if(this.auth_time <= 0){
+                    this.sendAuthCode = true;
+                    clearInterval(auth_timetimer);
+                }
+            }, 1000);
+
+
+          } else {
+            this.warningTip = res.data.message
+          }
+
+        })
+      },
       onSubmit () {
         
         api.log.login(this.loginForm).then((res) => {
           if(res.data.code === 200){
             
-            // 存储token,modules,corpId
+            // 存储token,modules,corpId,theme
             window.localStorage.setItem('accessToken', res.data.data.token)
             window.localStorage.setItem('type', res.data.data.type)
+
+            // let theme = res.data.data.description && res.data.data.description.indexOf('深色') > -1 ? 'theme2' : 'theme1'
+            let theme = 'theme2'
+            window.localStorage.setItem('theme', theme)
+
             if(res.data.data.modules){
               window.localStorage.setItem('modules', JSON.stringify(res.data.data.modules))
             }
@@ -302,6 +334,7 @@
     absolute bottom 0 left 153px;
   .inputWrap
     margin-top 22px
+    position: relative;
   .wthreeText
     font-size: 14px;
     color: #FFFFFF;
@@ -331,6 +364,12 @@
     top: 259px;
     right: 318px;
     /* z-index: -99; */
+  .smsSpan
+    position absolute
+    color: #FFFFFF;
+    top: 14px;
+    right: 17px;
+    cursor: pointer;
 @media screen and (max-width: 1920px) {
   #login {
     
