@@ -74,23 +74,23 @@
           </div>
         </div>
         <!-- disabled class="disabled" -->
-        <el-menu-item index="/map" route="/map" :disabled="ifDisabled('作业地图')" :class="{'disabled' :ifDisabled('作业地图')}"> 
+        <el-menu-item v-if="(theme == 'theme2' && !ifDisabled('作业地图')) || theme !== 'theme2'" index="/map" route="/map" :disabled="ifDisabled('作业地图')" :class="{'disabled' :ifDisabled('作业地图')}"> 
           <i class="icon-map"></i>
           <span slot="title">作业地图</span>
         </el-menu-item>
-        <el-menu-item index="/lift-list" route="/lift-list" :disabled="ifDisabled('数字电梯')" :class="{'disabled' :ifDisabled('数字电梯')}">
+        <el-menu-item v-if="(theme == 'theme2' && !ifDisabled('数字电梯')) || theme !== 'theme2'" index="/lift-list" route="/lift-list" :disabled="ifDisabled('数字电梯')" :class="{'disabled' :ifDisabled('数字电梯')}">
           <i class="icon-lift"></i>
           <span slot="title">数字电梯</span>
         </el-menu-item>
-        <el-menu-item index="/detection-query" route="/detection-query" :disabled="ifDisabled('检测诊断')" :class="{'disabled' :ifDisabled('检测诊断')}">
+        <el-menu-item v-if="(theme == 'theme2' && !ifDisabled('检测诊断')) || theme !== 'theme2'" index="/detection-query" route="/detection-query" :disabled="ifDisabled('检测诊断')" :class="{'disabled' :ifDisabled('检测诊断')}">
           <i class="icon-diagnosis"></i>
           <span slot="title">检测诊断</span>
         </el-menu-item>
-        <el-menu-item index="/mission" route="/mission" :disabled="ifDisabled('任务管理')" :class="{'disabled' :ifDisabled('任务管理')}">
+        <el-menu-item v-if="(theme == 'theme2' && !ifDisabled('任务管理')) || theme !== 'theme2'" index="/mission" route="/mission" :disabled="ifDisabled('任务管理')" :class="{'disabled' :ifDisabled('任务管理')}">
           <i class="icon-task"></i>
           <span slot="title">任务管理</span>
         </el-menu-item>
-        <el-menu-item index="" route="" :disabled="ifDisabled('经营报表')" :class="{'disabled' :ifDisabled('经营报表')}">
+        <el-menu-item v-if="(theme == 'theme2' && !ifDisabled('经营报表')) || theme !== 'theme2'" index="" route="" :disabled="ifDisabled('经营报表')" :class="{'disabled' :ifDisabled('经营报表')}">
           <i class="icon-business"></i>
           <span slot="title">经营报表</span>
         </el-menu-item>
@@ -98,7 +98,7 @@
           
           <span slot="title">系统设置</span>
         </el-menu-item> -->
-        <el-submenu index="1" :disabled="ifDisabled('系统设置')" :class="{'disabled' :ifDisabled('系统设置')}">
+        <el-submenu v-if="(theme == 'theme2' && !ifDisabled('系统设置')) || theme !== 'theme2'" index="1" :disabled="ifDisabled('系统设置')" :class="{'disabled' :ifDisabled('系统设置')}">
           <template slot="title">
             <i class="icon-setting"></i>
             <span slot="title">系统设置</span>
@@ -156,10 +156,10 @@
               </div>
               <div class="collapseImg unCollapseImg" v-if="!isCollapse" @click="isCollapse = true">
               </div>
-              <!-- <div id="contentDiv">
+              <div id="contentDiv">
                 <p @click="changeTheme('theme1')">111</p >
                 <p @click="changeTheme('theme2')">222</p >
-              </div> -->
+              </div>
               <a class="logo"></a>
               
               <!-- <div @mouseover="isShowUserNav = true" @mouseout="isShowUserNav = false" class="user-navigation">
@@ -219,7 +219,8 @@
         isCollapse: true,
         modulesJson: window.localStorage.getItem("modules"),
         type: window.localStorage.getItem("type"),
-        getAccountDetail:[]
+        getAccountDetail:[],
+        theme: "",
       }
     },
     components: {
@@ -236,7 +237,9 @@
         // console.log('to----' + to)
         console.log('theme', to.name)
         if (localStorage.getItem('theme')) {
+          this.theme = localStorage.getItem('theme')
           this.changeTheme(localStorage.getItem('theme'))
+          // alert(1)
         }
         
 
@@ -266,18 +269,25 @@
     },
         
     created(){
+      // alert(2)
+      this.theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'theme1'
+      // let theme = this.description.indexOf('深色') > -1 ? 'theme2' : 'theme1'
+      this.changeTheme(this.theme)
     },
 
     mounted () {
-      let theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'theme1'
-      this.changeTheme(theme)
+      // let theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'theme1'
+      // let theme = this.description.indexOf('深色') > -1 ? 'theme2' : 'theme1'
+      // this.changeTheme(theme)
       
     },
 
     methods: {
       changeTheme (theme) {
-        document.getElementById("page-container").setAttribute('class', theme)
+        // document.getElementById("page-container").setAttribute('class', theme)
+        document.getElementsByTagName("body")[0].setAttribute('class', theme)
         localStorage.setItem('theme', theme)
+        
       },
       // 查询账户详情
       getAllAccountData(){
@@ -468,7 +478,7 @@
   
   // 设置侧边栏图标 小图标 灰色图标
   .icon-map
-      background url('assets/images/hs/submenuIcon/openMap2.png') no-repeat center;
+    background url('assets/images/hs/submenuIcon/openMap2.png') no-repeat center;
   .icon-lift
     background url('assets/images/hs/submenuIcon/openLift2.png') no-repeat center;
   .icon-diagnosis
@@ -479,6 +489,7 @@
     background url('assets/images/hs/submenuIcon/openTable2.png') no-repeat center;
   .icon-setting
     background url('assets/images/hs/submenuIcon/openSet2.png') no-repeat center;
+  
   // 鼠标移动后菜单高亮 黑色图标
   .el-menu-item:not(.disabled):hover
     .icon-map
@@ -516,7 +527,6 @@
     // 设置侧边栏图标
     .icon-map
       background url('assets/images/hs/submenuIcon/map2.png') no-repeat center;
-      background-size: 16px auto;
     .icon-lift
       background url('assets/images/hs/submenuIcon/lift2.png') no-repeat center;
     .icon-diagnosis
@@ -531,7 +541,6 @@
     .el-menu-item:hover:not(.disabled)
       .icon-map
         background url('assets/images/hs/submenuIcon/map3.png') no-repeat center;
-        background-size: 16px auto;
       .icon-lift
         background url('assets/images/hs/submenuIcon/lift3.png') no-repeat center;
       .icon-diagnosis
@@ -547,7 +556,6 @@
     .el-menu-item.is-active:not(.disabled)
       .icon-map
         background url('assets/images/hs/submenuIcon/map1.png') no-repeat center;
-        background-size: 16px auto;
       .icon-lift
         background url('assets/images/hs/submenuIcon/lift1.png') no-repeat center;
       .icon-diagnosis
@@ -560,6 +568,8 @@
       .icon-setting
         background url('assets/images/hs/submenuIcon/set1.png') no-repeat center;
       // 设置侧边栏图标 end
+  .icon-map,.icon-lift,.icon-diagnosis,.icon-task,.icon-business,.icon-setting
+    background-size: 16px auto!important;
   #contentDiv
     position: absolute;
     top: 0;

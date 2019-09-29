@@ -28,4 +28,13 @@ export default  {
       `${http.localURL}/gielevbackend/login`, params
     )
   },
+  // 获取验证码
+  getSms(params){
+    return http.post(
+      // `${url2}/login`, params
+
+      // `${http.localURL}/elevcorp/login`, params
+      `${http.localURL}/elevcorp/sms`, params
+    )
+  }
 }

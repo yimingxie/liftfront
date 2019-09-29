@@ -1043,7 +1043,7 @@
 // 已完成电梯无动画
 .huanPicStop{
   display inline-block
-  size 40px 35px
+  size 44px 44px
   &:hover {
     transform scale(1.2)
   }
@@ -1051,7 +1051,7 @@
 // 未完成电梯有动画
 .huanPic{
   display inline-block
-  size 40px 35px
+  size 44px 44px
   -webkit-animation-timing-function: ease-in-out;
   -webkit-animation-name: myfirst03;
   -webkit-animation-duration: 500ms;
@@ -1188,6 +1188,8 @@
   background url("../../assets/images/hs/mapIcon/arrow1.png") no-repeat;
 .arrowImg0
   background url("../../assets/images/hs/mapIcon/arrow0.png") no-repeat;
+.arrowImg
+  background-size: 100% auto;
 .redDot:after
   content: ''
   width: 5px;

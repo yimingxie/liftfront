@@ -164,9 +164,22 @@ export default  {
   /**
    * 根据所选择的管辖区域电梯
    */
-  getElevatorByArea(corpId,areaCode){
-    return http.get(
-      `${url2}/staff/${corpId}/${areaCode}/elevator`
+  // getElevatorByArea(corpId,areaCode){
+  //   return http.get(
+  //     `${url2}/staff/${corpId}/${areaCode}/elevator`
+  //   )
+  // },
+  getElevatorByArea(params){
+    return http.post(
+      `${url2}/staff/elevator`,params
+    )
+  },
+  /**
+   * 员工管辖电梯
+   */
+  getStaffManageLift(params){
+    return http.post(
+      `${url2}/staff/elev`,params
     )
   },
   // 上传图片

@@ -397,7 +397,7 @@ export default {
       }
       // 筛选时默认跳到第一页
       this.queryParam.offset = 0
-
+      alert(1)
       this.queryParam.accountStatus = val
       this.getAllAccountData()
     }
@@ -541,7 +541,7 @@ export default {
       //   cancelButtonText: '取消',
       //   type: 'error'
       // }).then(() => {
-        var checkIds = this.checkedStaffs.join(',')
+        var checkIds = this.checkedStaffs
         // console.log("checkIds===" + checkIds)
         api.accountApi.resetPsd({"ids":checkIds,"corpId":window.localStorage.getItem('corpId')}).then((res) => {
           if (res.data.code === 200) {

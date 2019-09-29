@@ -91,37 +91,57 @@
            
           </el-form-item>
           <el-form-item >
-            <span slot="label">管辖电梯：<div class="subTip" >（第一负责人）</div></span>
-            <el-dropdown trigger="click" :hide-on-click="false" class="selectLiftDropdown">
-              <span class="el-dropdown-link ">
+            <span slot="label">管辖电梯1：<div class="subTip" >（第一负责人）</div></span>
+            <el-dropdown trigger="click"  :hide-on-click="false" class="selectLiftDropdown">
+              <span class="el-dropdown-link" @click="getFirstData">
                 <span v-if="checkedLiftAs.length > 0">{{checkedLiftAs.join(", ")}}</span>
                 <span v-else style="color:#C2C7CC;">(选填)请选择管辖区域后勾选管辖电梯</span>
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown" class="liftDropdown">
+                <!-- 搜索栏 -->
+                <div style="height:25px;padding-right: 10px;margin-bottom: 10px;">
+                  <search-input v-model.trim="searchKey" placeholderValue="搜索电梯注册代码" @search="searchLift" @cancel="clearCode"></search-input>
+                </div>
                 <div v-if="getLIftDataFirst.length > 0" v-for="item in getLIftDataFirst" :key="item.regCode">
-                    <!-- <div class="dropdownArea">{{item.areaName}}</div>
-                    <span class="dropdownList dropdown1">{{item.regCode}}</span>
-                    <span class="dropdownList dropdown2">{{item.inNum}}</span>
-                    <span class="dropdownList dropdown3">{{item.address}}</span>
+                  <!-- <div class="dropdownArea">{{item.areaName}}</div>
+                  <span class="dropdownList dropdown1">{{item.regCode}}</span>
+                  <span class="dropdownList dropdown2">{{item.inNum}}</span>
+                  <span class="dropdownList dropdown3">{{item.address}}</span>
+                  <span class="dropdownList dropdown4">
+                    <el-checkbox-group v-model="checkedLiftAs" @change="handleCheckedLiftAsChange">
+                      <el-checkbox :label="item.regCode" :key="item.regCode" class="checkbox16">{{nonetext}}</el-checkbox>
+                    </el-checkbox-group>
+                  </span> -->
+
+                  <div class="dropdownArea">{{item.areaName}}</div>
+                  <div v-for="list in item.data" :key="list.regCode">
+                    <!-- <span class="dropdownList dropdown1">{{list.regCode}}</span> -->
+                    <span class="dropdownList dropdown1" :title="list.regCode" v-if="list.regCode.length > 9">{{ list.regCode.substring(0, 4)}}...{{list.regCode.substring(list.regCode.length-4) }}</span>
+                    <span class="dropdownList dropdown1" v-else>{{list.regCode}}</span>
+                    <span class="dropdownList dropdown2">{{list.inNum}}</span>
+                    <span class="dropdownList dropdown3">{{list.address}}</span>
                     <span class="dropdownList dropdown4">
                       <el-checkbox-group v-model="checkedLiftAs" @change="handleCheckedLiftAsChange">
-                        <el-checkbox :label="item.regCode" :key="item.regCode" class="checkbox16">{{nonetext}}</el-checkbox>
+                        <el-checkbox :label="list.regCode" :key="list.regCode" class="checkbox16">{{nonetext}}</el-checkbox>
                       </el-checkbox-group>
-                    </span> -->
-
-                    <div class="dropdownArea">{{item.areaName}}</div>
-                    <div v-for="list in item.data" :key="list.regCode">
-                      <span class="dropdownList dropdown1">{{list.regCode}}</span>
-                      <span class="dropdownList dropdown2">{{list.inNum}}</span>
-                      <span class="dropdownList dropdown3">{{list.address}}</span>
-                      <span class="dropdownList dropdown4">
-                        <el-checkbox-group v-model="checkedLiftAs" @change="handleCheckedLiftAsChange">
-                          <el-checkbox :label="list.regCode" :key="list.regCode" class="checkbox16">{{nonetext}}</el-checkbox>
-                        </el-checkbox-group>
-                      </span>
-                    </div>
+                    </span>
                   </div>
+                  
+                </div>
+                <!-- 分页 Start -->
+                <div class="pagination_block" v-if="totalPageSize1 > 0">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :page-sizes="[10, 20, 30]"
+                    :page-size="getElevatorByAreaParams1.limit"
+                    :current-page.sync="getElevatorByAreaParams1.offset"
+                    layout="pager, jumper"
+                    :total="totalPageSize1">
+                  </el-pagination>
+                </div>
+                <!-- 分页 End -->
                 <div v-if="getLIftDataFirst.length === 0" class="tac" style="color: #999;"> 无数据 </div>
               </el-dropdown-menu>
             </el-dropdown>
@@ -130,19 +150,21 @@
           <el-form-item >
             <span slot="label">管辖电梯：<div class="subTip" >（第二负责人）</div></span>
             <el-dropdown trigger="click" :hide-on-click="false" class="selectLiftDropdown">
-              <span class="el-dropdown-link ">
+              <span class="el-dropdown-link " @click="getScdData">
                 <span v-if="checkedLiftBs.length > 0">{{checkedLiftBs.join(", ")}}</span>
                 <span v-else style="color:#C2C7CC;">(选填)请选择管辖区域后勾选管辖电梯</span>
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown" class="liftDropdown">
-                <div v-if="getLIftDataSecond.length > 0" style="height:25px;padding-right: 10px;margin-bottom: 10px;">
-                  <search-input v-model.trim="searchKey" placeholderValue="搜索电梯注册代码" @search="searchLift()" @cancel="searchLift()"></search-input>
+                <!-- 搜索栏 -->
+                <div style="height:25px;padding-right: 10px;margin-bottom: 10px;">
+                  <search-input v-model.trim="searchKey" placeholderValue="搜索电梯注册代码" @search="searchLift" @cancel="clearCode"></search-input>
                 </div>
                 <div v-if="getLIftDataSecond.length > 0" v-for="item in getLIftDataSecond" :key="item.regCode">
                   <div class="dropdownArea">{{item.areaName}}</div>
                   <div v-for="list in item.data" :key="list.regCode">
-                    <span class="dropdownList dropdown1">{{list.regCode}}</span>
+                    <span class="dropdownList dropdown1" :title="list.regCode" v-if="list.regCode.length > 9">{{ list.regCode.substring(0, 4)}}...{{list.regCode.substring(list.regCode.length-4) }}</span>
+                    <span class="dropdownList dropdown1" v-else>{{list.regCode}}</span>
                     <span class="dropdownList dropdown2">{{list.inNum}}</span>
                     <span class="dropdownList dropdown3">{{list.address}}</span>
                     <span class="dropdownList dropdown4">
@@ -151,7 +173,21 @@
                       </el-checkbox-group>
                     </span>
                   </div>
+                  
                 </div>
+                <!-- 分页 Start -->
+                <div class="pagination_block" v-if="totalPageSize2 > 0">
+                  <el-pagination
+                    @size-change="handleSizeChange2"
+                    @current-change="handleCurrentChange2"
+                    :page-sizes="[10, 20, 30]"
+                    :page-size="getElevatorByAreaParams2.limit"
+                    :current-page.sync="getElevatorByAreaParams2.offset"
+                    layout="pager, jumper"
+                    :total="totalPageSize2">
+                  </el-pagination>
+                </div>
+                <!-- 分页 End -->
                 <div v-if="getLIftDataSecond.length === 0" class="tac" style="color: #999;"> 无数据 </div>
               </el-dropdown-menu>
             </el-dropdown>
@@ -299,6 +335,22 @@ export default {
       getLIftDataSecond:[],
       checkedLiftAs:[],
       checkedLiftBs:[],
+      getLIftDataFirstOrigin: [],
+      getLIftDataSecondOrigin: [],
+      getElevatorByAreaParams1: {
+        corpId:window.localStorage.getItem('corpId'),
+        areaCode:'',
+        offset: 1,
+        limit: 10
+      },
+      totalPageSize1:0,
+      getElevatorByAreaParams2: {
+        corpId:window.localStorage.getItem('corpId'),
+        areaCode:'',
+        offset: 1,
+        limit: 10
+      },
+      totalPageSize2:0,
     }
   },
   components: {
@@ -308,68 +360,7 @@ export default {
     // 'search-code': SearchCode,
   },
   watch:{
-    // 切换员工管辖区域，获取管辖电梯列表
-    checkAreaList(val){
-      this.getLIftDataFirst = []
-      this.getLIftDataSecond = []
-      this.checkedLiftAs = []
-      this.checkedLiftBs = []
-      var firstList = []
-      var secondList = []
-      if(val.length > 0){
-        for(var i = 0; i < val.length; i++){
-          api.accountApi.getElevatorByArea(window.localStorage.getItem('corpId'),val[i]).then((res) => {
-            if(res.data.code === 200 && res.data.message === 'success'){
-               
-                if(res.data.data.major.length > 0){
-
-                  res.data.data.major.forEach(item =>{
-                    firstList.push(item)
-                  })
-                  
-                }
-                if(res.data.data.minor.length > 0){
-                  res.data.data.minor.forEach(item =>{
-                    secondList.push(item)
-                  })
-                }
-               
-                console.log("this.getLIftDataFirst===" + JSON.stringify(this.getLIftDataFirst))
-
-                firstList.forEach(item =>{
-                  var areaName = newArea.getAreaName(item.areaCode).join('')
-                  Vue.set(item, 'areaName', areaName)
-                })
-                secondList.forEach(item =>{
-                  var areaName = newArea.getAreaName(item.areaCode).join('')
-                  Vue.set(item, 'areaName', areaName)
-                })
-
-
-                ///////////////////////////
-                this.getLIftDataFirst = this.mergeArrayList(firstList)
-                this.getLIftDataSecond = this.mergeArrayList(secondList)
-                console.log("dest::::" + JSON.stringify(this.getLIftDataFirst));
-                //////////////////////////
-
-
-            } else {
-              this.getLIftDataFirst = []
-              this.getLIftDataSecond = []
-            }
-            
-            // console.log("res.data.code" + res.data.data.records[0])s
-          }).catch((res) => {
-            
-          })
-        }
-      } else{
-        this.getLIftDataFirst = []
-        this.getLIftDataSecond = []
-      }
-      
-      
-    }
+    
   },
   computed: { 
     // birthday() {
@@ -399,6 +390,138 @@ export default {
     
   },
   methods: {
+    handleClick() {
+      alert('button click');
+    },
+    // 每页条数变化
+    handleSizeChange(val) {
+      this.getElevatorByAreaParams1.limit = val
+      // console.log(`每页 ${val} 条`);
+      this.getFirstData()
+    },
+
+    // 当前页变化
+    handleCurrentChange(val) {
+      this.getElevatorByAreaParams1.offset = val
+      // console.log(`当前页: ${val}`);
+      this.getFirstData()
+    },
+    // 每页条数变化
+    handleSizeChange2(val) {
+      this.getElevatorByAreaParams2.limit = val
+      // console.log(`每页 ${val} 条`);
+      this.getScdData()
+    },
+
+    // 当前页变化
+    handleCurrentChange2(val) {
+      this.getElevatorByAreaParams2.offset = val
+      // console.log(`当前页: ${val}`);
+      this.getScdData()
+    },
+    // 切换员工管辖区域，获取管辖电梯列表
+    getFirstData(){
+      // alert(111)
+      var val = this.checkAreaList
+      this.getLIftDataFirst = []
+      this.checkedLiftAs = []
+      var firstList = []
+      if(val.length > 0){
+        for(var i = 0; i < val.length; i++){
+          this.getElevatorByAreaParams1.areaCode = val[i]
+          api.accountApi.getElevatorByArea(this.getElevatorByAreaParams1).then((res) => {
+            if(res.data.code === 200 && res.data.message === 'success'){
+               
+                if(res.data.data.major.length > 0){
+                  this.totalPageSize1 = res.data.data.majorTotal
+                  res.data.data.major.forEach(item =>{
+                    firstList.push(item)
+                  })
+                  
+                }
+               
+                console.log("this.getLIftDataFirst===" + JSON.stringify(this.getLIftDataFirst))
+
+                firstList.forEach(item =>{
+                  var areaName = newArea.getAreaName(item.areaCode).join('')
+                  Vue.set(item, 'areaName', areaName)
+                })
+               
+
+
+                ///////////////////////////
+                this.getLIftDataFirst = this.mergeArrayList(firstList)
+                this.getLIftDataFirstOrigin = this.mergeArrayList(firstList)
+               
+                //////////////////////////
+                
+
+            } else {
+              this.getLIftDataFirst = []
+            }
+            
+            // console.log("res.data.code" + res.data.data.records[0])s
+          }).catch((res) => {
+            
+          })
+        }
+      } else{
+        this.getLIftDataFirst = []
+        this.getLIftDataSecond = []
+      }
+      
+      
+    },
+    getScdData(){
+      // alert(111)
+      var val = this.checkAreaList
+      this.getLIftDataSecond = []
+      this.checkedLiftBs = []
+      var secondList = []
+      if(val.length > 0){
+        for(var i = 0; i < val.length; i++){
+          this.getElevatorByAreaParams2.areaCode = val[i]
+          api.accountApi.getElevatorByArea(this.getElevatorByAreaParams2).then((res) => {
+            if(res.data.code === 200 && res.data.message === 'success'){
+               
+                if(res.data.data.minor.length > 0){
+                  this.totalPageSize2 = res.data.data.minorTotal
+                  res.data.data.minor.forEach(item =>{
+                    secondList.push(item)
+                  })
+                }
+               
+                console.log("this.getLIftDataFirst===" + JSON.stringify(this.getLIftDataFirst))
+
+              
+                secondList.forEach(item =>{
+                  var areaName = newArea.getAreaName(item.areaCode).join('')
+                  Vue.set(item, 'areaName', areaName)
+                })
+
+
+                ///////////////////////////
+                this.getLIftDataSecond = this.mergeArrayList(secondList)
+                this.getLIftDataSecondOrigin = this.mergeArrayList(secondList)
+                console.log("dest::::" + JSON.stringify(this.getLIftDataFirst));
+                //////////////////////////
+                
+
+            } else {
+              this.getLIftDataSecond = []
+            }
+            
+            // console.log("res.data.code" + res.data.data.records[0])s
+          }).catch((res) => {
+            
+          })
+        }
+      } else{
+        this.getLIftDataSecond = []
+      }
+      
+      
+    },
     // 相同属性的数据合并处理
     mergeArrayList(arrData){
       var map = {},
@@ -891,7 +1014,7 @@ export default {
       })
       
     },
-    // 确认添加员工账号
+    // 确认编辑员工账号
     confirmEditAccount(){
 
       if(this.checkedLiftAs.length > 0){
@@ -970,8 +1093,9 @@ export default {
       }
       return temp;
     },
-    searchLift(){
-      console.log("searchKey==" + this.searchKey)
+    // 搜索第二负责人电梯
+    searchLift(key){
+      console.log("searchKey==" + key)
       // this.queryParam.depName = this.searchKey
       // this.getAllDepartmentData()
       if(this.getLIftDataSecond.length > 0){
@@ -986,11 +1110,14 @@ export default {
           })
           
         })
-        console.log("obj===" + JSON.stringify(obj))
+        this.getLIftDataSecond = this.mergeArrayList(obj)
+        console.log("this.getLIftDataSecond===" + JSON.stringify(this.getLIftDataSecond))
       }
       
+    },
+    clearCode(){
+      this.getLIftDataSecond = this.getLIftDataFirstOrigin
     }
-
     
   },
 }
@@ -1125,20 +1252,24 @@ export default {
       line-height: 29px!important;
 .liftDropdown
   width 473px
+  .search1 .search_input
+    width: 415px;
+    padding: 0 10px;
 .dropdownList
-  display inline-block
+  display inline-block;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  padding 0 10px
+  padding 0 10px;
   font-size: 14px;
   color: #34414C;
 .dropdown1
   width:20%
 .dropdown2
   width:20%
+  text-overflow: ellipsis;
 .dropdown3
   width:50%
+  text-overflow: ellipsis;
 .dropdown4
   width:6%
 .dropdownArea

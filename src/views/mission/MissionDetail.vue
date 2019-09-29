@@ -89,6 +89,7 @@
         </div>
       </div>
     </div>
+    
     <!-- 作业结论 -->
     <div style="width:33%;float:left">
       <div class="panel conclusions" style="padding:0 0 3px;min-height:282px;">
@@ -207,6 +208,7 @@
                 :filterable="true"
                 v-model="selectedDepartmentOptions"
                 @change="departmentChange"
+                @focus="getAllDepartment"
               ></el-cascader>
               <div class="stf_p stf_department">- -</div> 
               <div class="stf_p stf_phone">- -</div>
@@ -319,7 +321,6 @@ import PictureList from "../../components/PictureList"; //级联选择多选 完
 export default {
   data() {
     return {
-      aaaa:['zhinan','小明'],
       personOptions: [],
       activeStatus: 0,
       tab: 0, //人员页卡切换
@@ -381,8 +382,7 @@ export default {
   },
   mounted() {
     this.getMissionDetailData()
-    // 获取部门列表
-    this.getdeps()
+    
   },
   methods: {
     getStatusColor(status){
@@ -401,6 +401,11 @@ export default {
         color = 'rgb(194, 199, 204)'
       }
       return color
+    },
+    getAllDepartment(){
+      console.log("focus!")
+      // 获取部门列表
+      this.getdeps()
     },
     // 下拉人员选中值
     departmentChange(arr) {
@@ -514,6 +519,9 @@ export default {
     },
     // 获取公司下的部门
     getdeps(){
+      if(this.personOptions.length > 0){
+        return;
+      }
       api.accountApi.getCorpDepartments(window.localStorage.getItem('corpId')).then((res) => {
      
         var depData = res.data.data || []
@@ -533,8 +541,6 @@ export default {
           // console.log("personOptions===" + this.personOptions)
         }
         
-
-
       }).catch((res) => {
         
       })
