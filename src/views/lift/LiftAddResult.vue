@@ -101,7 +101,7 @@
                   </el-form-item>
                   <el-form-item prop="elevDate" class="lar-box">
                     <h4>制造日期</h4>
-                    <div v-if="submitState == 'post'" class="dwc-date-icon"></div>
+                    <div v-if="submitState == 'post'" class="dwc-date-icon hideIcon"></div>
                     <p class="show-pp" v-if="submitState == 'put'">{{ruleForm.elevDate}}</p>
                     <el-date-picker v-model="ruleForm.elevDate" type="date" placeholder="选择日期" prefix-icon="test-icon" value-format="yyyy-MM-dd" size="small" style="width: 100%" v-else></el-date-picker>
                   </el-form-item>
@@ -226,7 +226,7 @@
                 <div class="lar-con clearfix">
                   <el-form-item prop="statUtime" class="lar-box">
                     <h4>投入使用时间</h4>
-                    <div class="dwc-date-icon"></div>
+                    <div class="dwc-date-icon hideIcon"></div>
                     <el-date-picker v-model="ruleForm.statUtime" type="date" placeholder="选择日期" prefix-icon="test-icon" value-format="yyyy-MM-dd" size="small" style="width: 100%"></el-date-picker>
                   </el-form-item>
                   <el-form-item prop="exemptYear" class="lar-box">
@@ -235,22 +235,22 @@
                   </el-form-item>
                   <el-form-item prop="exemptStime" class="lar-box">
                     <h4>免保开始时间</h4>
-                    <div class="dwc-date-icon"></div>
+                    <div class="dwc-date-icon hideIcon"></div>
                     <el-date-picker v-model="ruleForm.exemptStime" type="date" placeholder="选择日期" prefix-icon="test-icon" value-format="yyyy-MM-dd" size="small" style="width: 100%"></el-date-picker>
                   </el-form-item>
                   <el-form-item prop="exemptEtime" class="lar-box">
                     <h4>免保终止时间</h4>
-                    <div class="dwc-date-icon"></div>
+                    <div class="dwc-date-icon hideIcon"></div>
                     <el-date-picker v-model="ruleForm.exemptEtime" type="date" placeholder="选择日期" prefix-icon="test-icon" value-format="yyyy-MM-dd" size="small" style="width: 100%"></el-date-picker>
                   </el-form-item>
                   <el-form-item prop="maintenStime" class="lar-box">
                     <h4>维保合同开始日期</h4>
-                    <div class="dwc-date-icon"></div>
+                    <div class="dwc-date-icon hideIcon"></div>
                     <el-date-picker v-model="ruleForm.maintenStime" type="date" placeholder="选择日期" prefix-icon="test-icon" value-format="yyyy-MM-dd" size="small" style="width: 100%"></el-date-picker>
                   </el-form-item>
                   <el-form-item prop="maintenEtime" class="lar-box">
                     <h4>维保合同终止日期</h4>
-                    <div class="dwc-date-icon"></div>
+                    <div class="dwc-date-icon hideIcon"></div>
                     <el-date-picker v-model="ruleForm.maintenEtime" type="date" placeholder="选择日期" prefix-icon="test-icon" value-format="yyyy-MM-dd" size="small" style="width: 100%"></el-date-picker>
                   </el-form-item>
 
@@ -966,16 +966,51 @@ export default {
 
     // 搜索
     goToResult(val) {
-      console.log('传值并跳转页面', val)
-      this.parentCode = val
-      this.$router.push({
-        path: '/lift-add-result',
-        query: {
-          regCode: val
+      const that = this
+      let skipFlag = true
+      let liftListParams = {
+        offset: 1, 
+        limit: 1000,
+        excpType: -1,
+        order: 'desc', // 异常排序
+        timeOrder: 'desc' // 添加时间
+      }
+
+      api.lift.getLiftList(liftListParams).then(res => {
+        let list = res.data.data.records
+        // 电梯存在则不跳转
+        list.find(item => {
+          if (item.regCode == val) {
+            skipFlag = false
+            return this.$message.error('电梯已存在')
+          }
+        })
+
+        if (skipFlag) {
+          this.parentCode = val
+          this.$router.push({
+            path: '/lift-add-result',
+            query: {
+              regCode: val,
+              // submitState: 'post'
+            }
+          })
+          this.getLiftResult()
         }
       })
-      this.getLiftResult()
-      console.log('pp', this.parentCode)
+
+
+
+      // console.log('传值并跳转页面', val)
+      // this.parentCode = val
+      // this.$router.push({
+      //   path: '/lift-add-result',
+      //   query: {
+      //     regCode: val
+      //   }
+      // })
+      // this.getLiftResult()
+      // console.log('pp', this.parentCode)
     },
 
     // 地图
